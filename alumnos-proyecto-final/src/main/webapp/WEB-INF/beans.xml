@@ -14,6 +14,16 @@
     <import resource="classpath:META-INF/cxf/cxf.xml"/>
     <import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>
 
+    <context:component-scan base-package="com.globant.bootcamp.service" />
+    
     <bean id="jsonProvider" class="org.codehaus.jackson.jaxrs.JacksonJsonProvider" />
     
+    <jaxrs:server id="alumnoServer" address="/">
+        <jaxrs:serviceBeans>
+            <ref bean="alumno" />
+        </jaxrs:serviceBeans>
+        <jaxrs:providers>
+            <ref bean='jsonProvider'/>
+        </jaxrs:providers>
+    </jaxrs:server>
 </beans>
