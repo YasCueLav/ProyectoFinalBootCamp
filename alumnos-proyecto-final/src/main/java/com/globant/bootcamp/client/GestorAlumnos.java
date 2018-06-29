@@ -19,45 +19,52 @@ import java.util.ArrayList;
  * @author Yasmin
  */
 public class GestorAlumnos {
-    private Connection conn;
-
+    AccesoDatos ad;
+    Connection tesConnection;
+    
     public GestorAlumnos() {
-        AccesoDatos ad = new AccesoDatos();
+        tesConnection = ad.getConn();
+        /*AccesoDatos ad = new AccesoDatos();
         try {
             conn = DriverManager.getConnection(ad.getConn_string(), ad.getUser(), ad.getPass());
         } catch (SQLException e) {
             System.out.println(e);
-        }
+        }*/
     }
     
-    public ArrayList<Alumno> obtenerAlumnos (){
+    public ArrayList<Alumno> obtenerAlumnos (){ 
         ArrayList<Alumno> lista = new ArrayList<>();
-        try{
-            Statement stmt = conn.createStatement();
-            ResultSet query = stmt.executeQuery("Select * from Alumnos");
-            while (query.next()){
-                Alumno a = new Alumno();
-                a.setIdAlumno(query.getInt("id_alumno"));
-                a.setLegajo(query.getInt("legajo"));
-                a.setNombre(query.getString("nombre"));
-                a.setApellido(query.getString("apellido"));
-                a.setDocumento(query.getInt("documento"));
-                a.setFechaNace(query.getString("fecha_nacimiento"));
-                lista.add(a);
+        if (tesConnection != null) {
+            try{
+                Statement stmt = ad.getConn().createStatement();
+                ResultSet query = stmt.executeQuery("Select * from Alumnos");
+                while (query.next()){
+                    Alumno a = new Alumno();
+                    a.setIdAlumno(query.getInt("id_alumno"));
+                    a.setLegajo(query.getInt("legajo"));
+                    a.setNombre(query.getString("nombre"));
+                    a.setApellido(query.getString("apellido"));
+                    a.setDocumento(query.getInt("documento"));
+                    a.setFechaNace(query.getString("fecha_nacimiento"));
+                    lista.add(a);
+                }
+                query.close();
+                stmt.close();
+                ad.getConn().close();
+            }catch(SQLException e){
+                System.out.println(e);
             }
-            query.close();
-            stmt.close();
-            conn.close();
-        }catch(SQLException e){
-            System.out.println(e);
+        }else{
+            System.out.println("No hay Coneccion");
         }
+     
         return lista;
     }
     
     public Alumno obtenerAlumnos (int id){
         Alumno a = new Alumno();
         try{
-            PreparedStatement stmt = conn.prepareStatement("select * from Alumnos where id_alumno = ?");
+            PreparedStatement stmt = ad.getConn().prepareStatement("select * from Alumnos where id_alumno = ?");
             stmt.setInt(1, id);
             ResultSet query = stmt.executeQuery();
             if(query.next()){
@@ -70,7 +77,7 @@ public class GestorAlumnos {
             }
             query.close();
             stmt.close();
-            conn.close();
+            ad.getConn().close();
         }catch(SQLException e){
             System.out.println(e);
         }
@@ -80,7 +87,7 @@ public class GestorAlumnos {
     public boolean modificarAlumno (Alumno a) {
         boolean modifico = true;
         try {
-            PreparedStatement stmt = conn.prepareStatement("UPDATE Alumnos SET legajo = ?, nombre = ?, apellido = ?, documento = ?, fecha_nacimiento = ? WHERE id_alumno = ?");
+            PreparedStatement stmt = ad.getConn().prepareStatement("UPDATE Alumnos SET legajo = ?, nombre = ?, apellido = ?, documento = ?, fecha_nacimiento = ? WHERE id_alumno = ?");
             stmt.setInt(1, a.getLegajo());
             stmt.setString(2, a.getNombre());
             stmt.setString(3, a.getApellido());
@@ -89,7 +96,7 @@ public class GestorAlumnos {
             stmt.setInt(6, a.getIdAlumno());
             stmt.executeUpdate();
             stmt.close();
-            conn.close();
+            ad.getConn().close();
         } catch (SQLException ex) {
             System.out.println(ex);
             modifico = false;
@@ -100,11 +107,11 @@ public class GestorAlumnos {
     public boolean eliminarAlumno (Alumno a) {
         boolean eliminar = true;
         try {
-            PreparedStatement stmt = conn.prepareStatement("DELETE FROM Alumnos WHERE id_alumno = ?");
+            PreparedStatement stmt = ad.getConn().prepareStatement("DELETE FROM Alumnos WHERE id_alumno = ?");
             stmt.setInt(1, a.getIdAlumno());
             stmt.executeUpdate();
             stmt.close();
-            conn.close();
+            ad.getConn().close();
         } catch (SQLException ex) {
             System.out.println(ex);
             eliminar = false;

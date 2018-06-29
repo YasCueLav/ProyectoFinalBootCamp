@@ -5,6 +5,7 @@
  */
 package com.globant.bootcamp.client;
 
+import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -13,6 +14,8 @@ import java.util.logging.Logger;
  * @author Yasmin
  */
 public class AccesoDatos {
+    private Connection conn;
+    
     private String conn_string;
     private String driver;
     private String user;
@@ -62,5 +65,15 @@ public class AccesoDatos {
 
     public void setPass(String pass) {
         this.pass = pass;
+    }
+    
+    public Connection getConn(){
+        try {
+            conn = DriverManager.getConnection(conn_string, user, pass);
+        } catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
+        return conn;
     }
 }
