@@ -24,7 +24,4 @@ public class service {
     public service() {
         
     }
-
-    
-    
 }
