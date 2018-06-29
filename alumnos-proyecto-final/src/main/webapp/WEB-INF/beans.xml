@@ -10,7 +10,6 @@
     http://www.springframework.org/schema/context/spring-context-4.1.xsd
     http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd">
 
-    
     <import resource="classpath:META-INF/cxf/cxf.xml"/>
     <import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>
 
@@ -20,7 +19,7 @@
     
     <jaxrs:server id="alumnoServer" address="/">
         <jaxrs:serviceBeans>
-            <ref bean="alumno" />
+            <ref bean="service" />
         </jaxrs:serviceBeans>
         <jaxrs:providers>
             <ref bean='jsonProvider'/>
