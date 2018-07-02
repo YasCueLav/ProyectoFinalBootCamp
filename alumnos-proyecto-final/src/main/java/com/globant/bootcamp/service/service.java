@@ -25,7 +25,7 @@ import org.springframework.stereotype.Component;
 public class service {
     Map<Integer, Alumno> alumno;
     GestorAlumnos ga;
-     Alumno a;
+    Alumno a;
      
     public service() {
         this.init();
