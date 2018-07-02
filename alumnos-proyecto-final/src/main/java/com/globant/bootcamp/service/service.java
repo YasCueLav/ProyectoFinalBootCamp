@@ -27,20 +27,20 @@ public class service {
     GestorAlumnos ga;
     Alumno a;
      
-//    public service() {
-//        getAllAlumno();
-//    }
-//
-//    private Map init() {
-//        ArrayList<Alumno> lista = new ArrayList<>();
-//        ga = new GestorAlumnos();
-//        lista = ga.obtenerAlumnos();
-//        for (Alumno alu : lista) {
-//            alumno = new HashMap<>();
-//            alumno.put(alu.getLegajo(), alu);
-//        }
-//        return alumno;
-//    }
+/*    public service() {
+        getAllAlumno();
+    }
+
+    private Map init() {
+        ArrayList<Alumno> lista = new ArrayList<>();
+        ga = new GestorAlumnos();
+        lista = ga.obtenerAlumnos();
+        for (Alumno alu : lista) {
+            alumno = new HashMap<>();
+            alumno.put(alu.getLegajo(), alu);
+        }
+        return alumno;
+    }*/
     
     @GET
 //    @Path("/alumno/getAll")
@@ -114,8 +114,8 @@ public class service {
     }
     
     @GET
-//    @Path("/alumno/update/{leg}")
-    @Path("/new/{legajo}&{nombre}&{apellido}&{documento}&{fecha}")
+    //@Path("/new/{legajo}&{nombre}&{apellido}&{documento}&{fecha}")
+    @Path("/new")
     private String newAlumno (@PathParam("leg") int leg, @QueryParam("legajo") int legajo,
 			@QueryParam("nombre") String nombre, @QueryParam("apellido") String apellido,
                         @QueryParam("documento") int documento, @QueryParam("fecha") String fecha) {
