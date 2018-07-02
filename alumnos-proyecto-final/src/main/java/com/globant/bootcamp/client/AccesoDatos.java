@@ -6,8 +6,10 @@
 package com.globant.bootcamp.client;
 
 import java.sql.*;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.activation.DataSource;
 
 /**
  *
@@ -21,8 +23,11 @@ public class AccesoDatos {
     private String user;
     private String pass;
     
-     public AccesoDatos() {
-        
+    //private final DataSource dt;
+    
+     public AccesoDatos(/*DataSource dataS*/) {
+        //this.dt = dataS;
+         
         conn_string = "jdbc:sqlserver://LAPTOP-PA76RMSN\\SQLEXPRESS:1433;databaseName=Bootcamp";
         driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
         user = "prueba";

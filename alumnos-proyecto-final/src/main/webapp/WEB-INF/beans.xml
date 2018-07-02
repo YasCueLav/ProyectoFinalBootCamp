@@ -17,10 +17,17 @@
     
     <bean id="jsonProvider" class="org.codehaus.jackson.jaxrs.JacksonJsonProvider" />
     
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
+        <property name="url" value="jdbc:sqlserver://LAPTOP-PA76RMSN\\SQLEXPRESS:1433;databaseName=Bootcamp"/>
+        <property name="username" value="prueba"/>
+        <property name="password" value="sa1234"/>
+    </bean>
+    
     <jaxrs:server id="alumnoServer" address="/">
         <jaxrs:serviceBeans>
-            <!--<ref bean="service" />-->
-            <ref bean="alumnos" />
+            <ref bean="service" />
+            <!--<ref bean="alumnos" />-->
         </jaxrs:serviceBeans>
         <jaxrs:providers>
             <ref bean='jsonProvider'/>

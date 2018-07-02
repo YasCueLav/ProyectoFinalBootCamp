@@ -10,8 +10,10 @@ import com.globant.bootcamp.domain.Alumno;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import javax.activation.DataSource;
 import javax.ws.rs.*;
 import javax.ws.rs.QueryParam;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -19,15 +21,20 @@ import org.springframework.stereotype.Component;
  * @author Yasmin
  */
 @Component
-@Path("/alumnos")
+@Path("/service")
 @Consumes("application/json")
 @Produces("application/json")
 public class service {
     Map<Integer, Alumno> alumno;
     GestorAlumnos ga;
     Alumno a;
-     
-/*    public service() {
+    
+    /*private final DataSource ds;
+    @Autowired
+    public service(DataSource ds) {
+        this.ds = ds;
+    }
+    public service() {
         getAllAlumno();
     }
 
@@ -42,6 +49,19 @@ public class service {
         return alumno;
     }*/
     
+    /*
+    @GET
+    private Map getAllAlumno() {
+        List<Alumno> lista = new ArrayList<>();
+        ga = new GestorAlumnos(ds);
+        lista = ga.obtenerAlumnos();
+        for (Alumno alu : lista) {
+            alumno = new HashMap<>();
+            alumno.put(alu.getLegajo(), alu);
+        }
+        return alumno;
+    }
+*/
     @GET
 //    @Path("/alumno/getAll")
     private Map getAllAlumno() {
@@ -65,44 +85,59 @@ public class service {
         return a;
     }
     
-    @DELETE
-//    @Path("/alumno/delete/{legajo}")
-    @Path("/delete/{legajo}")
-    private String deleteAlumno (@PathParam("legajo") int legajo) {
-        boolean elimino;
+    @POST
+    //@Path("/new/{legajo}&{nombre}&{apellido}&{documento}&{fecha}")
+    @Path("/new")
+    private String newAlumno (Alumno al/*@PathParam("leg") int leg, @QueryParam("legajo") int legajo,
+			@QueryParam("nombre") String nombre, @QueryParam("apellido") String apellido,
+                        @QueryParam("documento") int documento, @QueryParam("fecha") String fecha*/) {
+        boolean agrego;
         String txt;
-        a = ga.obtenerAlumnos(legajo);
-        elimino = ga.eliminarAlumno(a);
         
-        if (elimino) {
-            txt = "Eliminado";
+        a.setLegajo(al.getLegajo());
+        a.setNombre(al.getNombre());
+        a.setApellido(al.getApellido());
+        a.setDocumento(al.getDocumento());
+        a.setFechaNace(al.getFechaNace());
+        
+        agrego = ga.nuevoAlumno(a);
+        
+        if (agrego) {
+            txt = "Agregado";
             return txt;
         }else{
-            txt = "No se ha Eliminado";
+            txt = "No se ha Agregado";
             return txt;
         }
     }
-    
-    @GET
+
+    @PUT
 //    @Path("/alumno/update/{leg}")
     @Path("/update/{leg}")
-    private String updateAlumno (@PathParam("leg") int leg, @QueryParam("legajo") int legajo,
+    private String updateAlumno (Alumno al/*@PathParam("leg") int leg, @QueryParam("legajo") int legajo,
 			@QueryParam("nombre") String nombre, @QueryParam("apellido") String apellido,
-                        @QueryParam("documento") int documento, @QueryParam("fecha") String fecha) {
+                        @QueryParam("documento") int documento, @QueryParam("fecha") String fecha*/) {
         boolean modifico;
-        String txt = "";
+        String txt;
         
-        Alumno alu = new Alumno();
-        a = ga.obtenerAlumnos(leg);
+        a.setLegajo(al.getLegajo());
+        a.setNombre(al.getNombre());
+        a.setApellido(al.getApellido());
+        a.setDocumento(al.getDocumento());
+        a.setFechaNace(al.getFechaNace());
         
-        alu.setIdAlumno(a.getIdAlumno());
-        alu.setLegajo(legajo);
-        alu.setNombre(nombre);
-        alu.setApellido(apellido);
-        alu.setDocumento(documento);
-        alu.setFechaNace(fecha);
+        //Alumno alu = new Alumno();
+        //a = ga.obtenerAlumnos(leg);
         
-        modifico = ga.modificarAlumno(alu);
+//        alu.setIdAlumno(a.getIdAlumno());
+//        alu.setLegajo(legajo);
+//        alu.setNombre(nombre);
+//        alu.setApellido(apellido);
+//        alu.setDocumento(documento);
+//        alu.setFechaNace(fecha);
+        
+//        modifico = ga.modificarAlumno(alu);
+          modifico = ga.modificarAlumno(a);
         
         if (modifico) {
             txt = "Modifiado";
@@ -113,28 +148,19 @@ public class service {
         }
     }
     
-    @GET
-    //@Path("/new/{legajo}&{nombre}&{apellido}&{documento}&{fecha}")
-    @Path("/new")
-    private String newAlumno (@PathParam("leg") int leg, @QueryParam("legajo") int legajo,
-			@QueryParam("nombre") String nombre, @QueryParam("apellido") String apellido,
-                        @QueryParam("documento") int documento, @QueryParam("fecha") String fecha) {
-        boolean agrego;
-        String txt = "";
+    @DELETE
+//    @Path("/alumno/delete/{legajo}")
+    @Path("/delete/{legajo}")
+    private String deleteAlumno (@PathParam("legajo") int legajo) {
+        boolean elimino;
+        String txt;
+        elimino = ga.eliminarAlumno(legajo);
         
-        a.setLegajo(legajo);
-        a.setNombre(nombre);
-        a.setApellido(apellido);
-        a.setDocumento(documento);
-        a.setFechaNace(fecha);
-        
-        agrego = ga.nuevoAlumno(a);
-        
-        if (agrego) {
-            txt = "Agregado";
+        if (elimino) {
+            txt = "Eliminado";
             return txt;
         }else{
-            txt = "No se ha Agregado";
+            txt = "No se ha Eliminado";
             return txt;
         }
     }

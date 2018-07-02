@@ -69,4 +69,10 @@ public class Alumno {
     public void setFechaNace(String fechaNace) {
         this.fechaNace = fechaNace;
     }
+
+    @Override
+    public String toString() {
+        return "Alumno: idAlumno =" + idAlumno + ", legajo=" + legajo + ", nombre=" + nombre + ", apellido=" + apellido + ", documento=" + documento + ", fechaNace=" + fechaNace ;
+    }
+    
 }
