@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
  * @author Yasmin
  */
 @Component
-@Path("/service")
+@Path("/alumnos")
 @Consumes("application/json")
 @Produces("application/json")
 public class service {
@@ -27,11 +27,24 @@ public class service {
     GestorAlumnos ga;
     Alumno a;
      
-    public service() {
-        this.init();
-    }
-
-    private Map init() {
+//    public service() {
+//        getAllAlumno();
+//    }
+//
+//    private Map init() {
+//        ArrayList<Alumno> lista = new ArrayList<>();
+//        ga = new GestorAlumnos();
+//        lista = ga.obtenerAlumnos();
+//        for (Alumno alu : lista) {
+//            alumno = new HashMap<>();
+//            alumno.put(alu.getLegajo(), alu);
+//        }
+//        return alumno;
+//    }
+    
+    @GET
+//    @Path("/alumno/getAll")
+    private Map getAllAlumno() {
         ArrayList<Alumno> lista = new ArrayList<>();
         ga = new GestorAlumnos();
         lista = ga.obtenerAlumnos();
@@ -40,24 +53,21 @@ public class service {
             alumno.put(alu.getLegajo(), alu);
         }
         return alumno;
-    }
-    
-    @GET
-    @Path("/alumno/getAll")
-    private Map getAllAlumno() {
-         return this.init();
+//         return this.init();
     }
     
     
     @GET
-    @Path("/alumno/getOne/{legajo}")
+//    @Path("/alumno/getOne/{legajo}")
+    @Path("/getOne/{legajo}")
     private Alumno getOneAlumno(@PathParam("legajo") int legajo) {
         a = ga.obtenerAlumnos(legajo);
         return a;
     }
     
-    @GET
-    @Path("/alumno/delete/{legajo}")
+    @DELETE
+//    @Path("/alumno/delete/{legajo}")
+    @Path("/delete/{legajo}")
     private String deleteAlumno (@PathParam("legajo") int legajo) {
         boolean elimino;
         String txt;
@@ -74,7 +84,8 @@ public class service {
     }
     
     @GET
-    @Path("/alumno/update/{leg}")
+//    @Path("/alumno/update/{leg}")
+    @Path("/update/{leg}")
     private String updateAlumno (@PathParam("leg") int leg, @QueryParam("legajo") int legajo,
 			@QueryParam("nombre") String nombre, @QueryParam("apellido") String apellido,
                         @QueryParam("documento") int documento, @QueryParam("fecha") String fecha) {
@@ -98,6 +109,32 @@ public class service {
             return txt;
         }else{
             txt = "No se ha Modifiado";
+            return txt;
+        }
+    }
+    
+    @GET
+//    @Path("/alumno/update/{leg}")
+    @Path("/new/{legajo}&{nombre}&{apellido}&{documento}&{fecha}")
+    private String newAlumno (@PathParam("leg") int leg, @QueryParam("legajo") int legajo,
+			@QueryParam("nombre") String nombre, @QueryParam("apellido") String apellido,
+                        @QueryParam("documento") int documento, @QueryParam("fecha") String fecha) {
+        boolean agrego;
+        String txt = "";
+        
+        a.setLegajo(legajo);
+        a.setNombre(nombre);
+        a.setApellido(apellido);
+        a.setDocumento(documento);
+        a.setFechaNace(fecha);
+        
+        agrego = ga.nuevoAlumno(a);
+        
+        if (agrego) {
+            txt = "Agregado";
+            return txt;
+        }else{
+            txt = "No se ha Agregado";
             return txt;
         }
     }

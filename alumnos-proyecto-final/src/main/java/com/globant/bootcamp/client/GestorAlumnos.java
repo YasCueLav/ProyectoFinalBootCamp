@@ -84,6 +84,25 @@ public class GestorAlumnos {
         return a;
     }
     
+    public boolean nuevoAlumno (Alumno a) {
+        boolean agregar = true;
+        try {
+            PreparedStatement stmt = tesConnection.prepareStatement("INSERT INTO dbo.Alumnos(legajo, documento,nombre,apellido,fecha_nacimiento) VALUES (?,?,?,?,?)");
+            stmt.setInt(1, a.getLegajo());
+            stmt.setString(2, a.getNombre());
+            stmt.setString(3, a.getApellido());
+            stmt.setInt(4, a.getDocumento());
+            stmt.setString(5, a.getFechaNace());
+            stmt.executeUpdate();
+            stmt.close();
+            tesConnection.close();
+        } catch (SQLException ex) {
+            System.out.println(ex);
+            agregar = false;
+        }
+        return agregar;
+    }
+    
     public boolean modificarAlumno (Alumno a) {
         boolean modifico = true;
         try {
