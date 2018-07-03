@@ -21,20 +21,20 @@ import org.springframework.stereotype.Component;
  * @author Yasmin
  */
 @Component
-@Path("/service")
+@Path("/serviceAlumno")
 @Consumes("application/json")
 @Produces("application/json")
-public class service {
+public class serviceAlumno {
     Map<Integer, Alumno> alumno;
     GestorAlumnos ga;
     Alumno a;
     
     /*private final DataSource ds;
     @Autowired
-    public service(DataSource ds) {
+    public serviceAlumno(DataSource ds) {
         this.ds = ds;
     }
-    public service() {
+    public serviceAlumno() {
         getAllAlumno();
     }
 

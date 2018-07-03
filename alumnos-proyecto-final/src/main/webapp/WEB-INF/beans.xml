@@ -26,7 +26,7 @@
     
     <jaxrs:server id="alumnoServer" address="/">
         <jaxrs:serviceBeans>
-            <ref bean="service" />
+            <ref bean="serviceAlumno" />
             <!--<ref bean="alumnos" />-->
         </jaxrs:serviceBeans>
         <jaxrs:providers>
