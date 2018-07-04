@@ -5,7 +5,7 @@
  */
 package com.globant.bootcamp.service;
 
-import com.globant.bootcamp.client.GestorAlumnos;
+
 import com.globant.bootcamp.domain.Alumno;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,7 +19,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.sql.DataSource;
-
 import javax.ws.rs.*;
 import javax.ws.rs.QueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,9 +44,12 @@ public class serviceAlumno {
         this.dataSource = dataSource;
         getAllAlumno();
     }
+
+    public serviceAlumno() {
+    }
     
     @GET
-    private Map getAllAlumno() {
+    public Map getAllAlumno() {
 /*        ArrayList<Alumno> lista = new ArrayList<>();
         ga = new GestorAlumnos();
         lista = (ArrayList<Alumno>) ga.obtenerAlumnos();
@@ -77,7 +79,7 @@ public class serviceAlumno {
                 stmt.close();
                 conn.close();
             }catch(SQLException e){
-               Logger.getLogger(GestorAlumnos.class.getName()).log(Level.SEVERE, null, e);
+               Logger.getLogger(serviceAlumno.class.getName()).log(Level.SEVERE, null, e);
             }
         //return lista;
         return alumno;
@@ -85,12 +87,13 @@ public class serviceAlumno {
     
     @GET
     @Path("/getOne/{legajo}")
-    private Alumno getOneAlumno(@PathParam("legajo") int legajo) {
+    public Alumno getOneAlumno(@PathParam("legajo") int legajo) {
 //        a = ga.obtenerAlumnos(legajo);
 //        return a;
 //        Alumno a = new Alumno();
+        int c = 0;
         try{
-            Connection conn = this.dataSource.getConnection();
+            conn = this.dataSource.getConnection();
             PreparedStatement stmt = conn.prepareStatement("select * from Alumnos where legajo = ?");
             stmt.setInt(1, legajo);
             ResultSet query = stmt.executeQuery();
@@ -101,10 +104,16 @@ public class serviceAlumno {
                 a.setApellido(query.getString("apellido"));
                 a.setDocumento(query.getInt("documento"));
                 a.setFechaNace(query.getString("fecha_nacimiento"));
+                c++;
             }
             query.close();
             stmt.close();
             conn.close();
+            if (c != 0){
+                return a;
+            }else{
+                return null;
+            }
         }catch(SQLException e){
             System.out.println(e);
         }
@@ -113,7 +122,7 @@ public class serviceAlumno {
     
     @POST
     @Path("/new")
-    private void newAlumno (Alumno al) {
+    public void newAlumno (Alumno al) {
        /* boolean agrego;
         String txt;
         
@@ -133,7 +142,7 @@ public class serviceAlumno {
             return txt;
         }*/
         try {
-            Connection conn = this.dataSource.getConnection();
+            conn = this.dataSource.getConnection();
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO dbo.Alumnos(legajo, documento,nombre,apellido,fecha_nacimiento) VALUES (?,?,?,?,?)");
             stmt.setInt(1, al.getLegajo());
             stmt.setString(2, al.getNombre());
@@ -144,13 +153,14 @@ public class serviceAlumno {
             stmt.close();
             conn.close();
         } catch (SQLException ex) {
+            Logger.getLogger(serviceAlumno.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(ex);
         }
     }
 
     @PUT
     @Path("/update/{leg}")
-    private void updateAlumno (Alumno al/*@PathParam("leg") int leg, @QueryParam("legajo") int legajo,
+    public void updateAlumno (Alumno al/*@PathParam("leg") int leg, @QueryParam("legajo") int legajo,
 			@QueryParam("nombre") String nombre, @QueryParam("apellido") String apellido,
                         @QueryParam("documento") int documento, @QueryParam("fecha") String fecha*/) {
         /*boolean modifico;
@@ -183,7 +193,7 @@ public class serviceAlumno {
             return txt;
         }*/
         try {
-            Connection conn = this.dataSource.getConnection();
+            conn = this.dataSource.getConnection();
             PreparedStatement stmt = conn.prepareStatement("UPDATE Alumnos SET nombre = ?, apellido = ?, documento = ?, fecha_nacimiento = ? WHERE legajo = ?");
             stmt.setString(1, al.getNombre());
             stmt.setString(2, al.getApellido());
@@ -194,13 +204,14 @@ public class serviceAlumno {
             stmt.close();
             conn.close();
         } catch (SQLException ex) {
+            Logger.getLogger(serviceAlumno.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(ex);
         }
     }
     
     @DELETE
     @Path("/delete/{legajo}")
-    private void deleteAlumno (@PathParam("legajo") int legajo) {
+    public void deleteAlumno (@PathParam("legajo") int legajo) {
         /*boolean elimino;
         String txt;
         elimino = ga.eliminarAlumno(legajo);
@@ -213,14 +224,16 @@ public class serviceAlumno {
             return txt;
         }*/
         try {
-            Connection conn = this.dataSource.getConnection();
+            conn = this.dataSource.getConnection();
             PreparedStatement stmt = conn.prepareStatement("DELETE FROM Alumnos WHERE legajo = ?");
             stmt.setInt(1, legajo);
             stmt.executeUpdate();
             stmt.close();
             conn.close();
         } catch (SQLException ex) {
+            Logger.getLogger(serviceAlumno.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(ex);
         }
     }
+
 }
