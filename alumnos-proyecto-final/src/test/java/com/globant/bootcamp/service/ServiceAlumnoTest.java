@@ -9,6 +9,6 @@ package com.globant.bootcamp.service;
  *
  * @author Yasmin
  */
-public class GestorAlumnoTest {
+public class ServiceAlumnoTest {
     
 }

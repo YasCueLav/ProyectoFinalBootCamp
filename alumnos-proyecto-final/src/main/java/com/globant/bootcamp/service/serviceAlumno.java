@@ -33,9 +33,7 @@ public class serviceAlumno {
     @Autowired
     public serviceAlumno(DataSource ds) {
         this.ds = ds;
-    }
-    public serviceAlumno() {
-        getAllAlumno();
+        //getAllAlumno();
     }
 
     private Map init() {
