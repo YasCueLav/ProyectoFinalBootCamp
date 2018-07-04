@@ -4,6 +4,9 @@
  * and open the template in the editor.
  */
 package com.globant.bootcamp.client;
+/*
+import javax.sql.DataSource;
+
 
 import com.globant.bootcamp.domain.Alumno;
 import java.sql.Connection;
@@ -16,29 +19,37 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.activation.DataSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Component;*/
 
 /**
  *
  * @author Yasmin
- */
+ 
+@Component*/
 public class GestorAlumnos {
-    AccesoDatos ad;
-    Connection tesConnection;
+ /*   AccesoDatos ad;
+//    Connection tesConnection;
 //    Connection conn;
-//    private final DataSource dataSource;
     
-    public GestorAlumnos(/*DataSource dataSource*/) {
-        //this.dataSource=dataSource;
-        tesConnection = ad.getConn();
-        AccesoDatos ad = new AccesoDatos();
-        try {
-            tesConnection = DriverManager.getConnection(ad.getConn_string(), ad.getUser(), ad.getPass());
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
+    private final DataSource dataSource;
+    
+    //@Autowired
+    public GestorAlumnos(DataSource dataSource) {
+        this.dataSource=dataSource;
+//        tesConnection = ad.getConn();
+//        AccesoDatos ad = new AccesoDatos();
+//        try {
+//            tesConnection = DriverManager.getConnection(ad.getConn_string(), ad.getUser(), ad.getPass());
+//        } catch (SQLException e) {
+//            System.out.println(e);
+//        }
     }
-    /*
+    
+//    public GestorAlumnos() {
+//    }
+    
     public List<Alumno> obtenerAlumnos (){ 
         List<Alumno> lista = new ArrayList<>();
             try{
@@ -62,35 +73,35 @@ public class GestorAlumnos {
                Logger.getLogger(GestorAlumnos.class.getName()).log(Level.SEVERE, null, e);
             }
         return lista;
-    }*/
-    public ArrayList<Alumno> obtenerAlumnos (){ 
-        ArrayList<Alumno> lista = new ArrayList<>();
-        if (tesConnection != null) {
-            try{
-                Statement stmt = tesConnection.createStatement();
-                ResultSet query = stmt.executeQuery("Select * from Alumnos");
-                while (query.next()){
-                    Alumno a = new Alumno();
-                    a.setIdAlumno(query.getInt("id_alumno"));
-                    a.setLegajo(query.getInt("legajo"));
-                    a.setNombre(query.getString("nombre"));
-                    a.setApellido(query.getString("apellido"));
-                    a.setDocumento(query.getInt("documento"));
-                    a.setFechaNace(query.getString("fecha_nacimiento"));
-                    lista.add(a);
-                }
-                query.close();
-                stmt.close();
-                tesConnection.close();
-            }catch(SQLException e){
-                System.out.println(e);
-            }
-        }else{
-            System.out.println("No hay Coneccion");
-        }
-     
-        return lista;
     }
+//    public ArrayList<Alumno> obtenerAlumnos (){ 
+//        ArrayList<Alumno> lista = new ArrayList<>();
+//        if (tesConnection != null) {
+//            try{
+//                Statement stmt = tesConnection.createStatement();
+//                ResultSet query = stmt.executeQuery("Select * from Alumnos");
+//                while (query.next()){
+//                    Alumno a = new Alumno();
+//                    a.setIdAlumno(query.getInt("id_alumno"));
+//                    a.setLegajo(query.getInt("legajo"));
+//                    a.setNombre(query.getString("nombre"));
+//                    a.setApellido(query.getString("apellido"));
+//                    a.setDocumento(query.getInt("documento"));
+//                    a.setFechaNace(query.getString("fecha_nacimiento"));
+//                    lista.add(a);
+//                }
+//                query.close();
+//                stmt.close();
+//                tesConnection.close();
+//            }catch(SQLException e){
+//                System.out.println(e);
+//            }
+//        }else{
+//            System.out.println("No hay Coneccion");
+//        }
+//     
+//        return lista;
+//    }
     
     public Alumno obtenerAlumnos (int legajo){
         Alumno a = new Alumno();
@@ -168,5 +179,5 @@ public class GestorAlumnos {
             eliminar = false;
         }
         return eliminar;
-    }
+    }*/
 }

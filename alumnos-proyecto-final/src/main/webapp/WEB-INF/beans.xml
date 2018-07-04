@@ -16,10 +16,10 @@
     <context:component-scan base-package="com.globant.bootcamp.service" />
     
     <bean id="jsonProvider" class="org.codehaus.jackson.jaxrs.JacksonJsonProvider" />
-    
+                                
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
-        <property name="url" value="jdbc:sqlserver://LAPTOP-PA76RMSN\\SQLEXPRESS:1433;databaseName=Bootcamp"/>
+        <property name="url" value="jdbc:sqlserver://LAPTOP-PA76RMSN\SQLEXPRESS:1433;databaseName=Bootcamp"/>
         <property name="username" value="prueba"/>
         <property name="password" value="sa1234"/>
     </bean>

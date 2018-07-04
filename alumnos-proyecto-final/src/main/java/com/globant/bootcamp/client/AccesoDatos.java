@@ -16,30 +16,30 @@ import javax.activation.DataSource;
  * @author Yasmin
  */
 public class AccesoDatos {
-    private Connection conn;
-    
-    private String conn_string;
-    private String driver;
-    private String user;
-    private String pass;
-    
-    //private final DataSource dt;
-    
-     public AccesoDatos(/*DataSource dataS*/) {
-        //this.dt = dataS;
-         
-        conn_string = "jdbc:sqlserver://LAPTOP-PA76RMSN\\SQLEXPRESS:1433;databaseName=Bootcamp";
-        driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-        user = "prueba";
-        pass = "sa1234";
-        
-        try {
-            Class.forName(driver);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(AccesoDatos.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
+//    private Connection conn;
+//    
+//    private String conn_string;
+//    private String driver;
+//    private String user;
+//    private String pass;
+//    
+//    private final DataSource dt;
+//    
+//     public AccesoDatos(DataSource dataS) {
+//        this.dt = dataS;
+//         
+////        conn_string = "jdbc:sqlserver://LAPTOP-PA76RMSN\\SQLEXPRESS:1433;databaseName=Bootcamp";
+////        driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+////        user = "prueba";
+////        pass = "sa1234";
+////        
+////        try {
+////            Class.forName(driver);
+////        } catch (ClassNotFoundException ex) {
+////            Logger.getLogger(AccesoDatos.class.getName()).log(Level.SEVERE, null, ex);
+////        }
+//    }
+/*
     public String getConn_string() {
         return conn_string;
     }
@@ -80,5 +80,5 @@ public class AccesoDatos {
             return null;
         }
         return conn;
-    }
+    }*/
 }
